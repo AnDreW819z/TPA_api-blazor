@@ -11,7 +11,7 @@ else if (ErrorMessage != null)
 }
 else
 {
-    <h3 class="mb-5">Корзина</h3>
+    <h3 class="mb-5">Shopping Cart</h3>
     @if(ShoppingCartItems.Count() > 0)
     {
       <div class = "row mb-5">
@@ -43,9 +43,9 @@ else
             }
         </div>
         <div class="col-md-3">
-            <h5>Итог:</h5>
+            <h5>Cart Summary</h5>
             <div class="mt-2">
-                <div>Всего - (@TotalQuantity единиц)&nbsp;<b>@TotalPrice</b></div>
+                <div>Total - (@TotalQuantity items)&nbsp;<b>@TotalPrice</b></div>
                 <a href="Checkout" class="btn btn-success">
                     <span class="oi oi-credit-card"></span>&nbsp; Перейти к заказу
                 </a>
