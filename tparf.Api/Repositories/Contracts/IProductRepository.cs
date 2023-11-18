@@ -6,11 +6,15 @@ namespace tparf.Api.Repositories.Contracts
     {
         Task<IEnumerable<Product>> GetItems();
         Task<IEnumerable<ProductCategory>> GetCategories();
-        Task<Product> GetItem(int id);
-        Task<ProductCategory> GetCategory(int id);
+        Task<Product> GetItem(long id);
+        Task<ProductCategory> GetCategory(long id);
         Task<IEnumerable<ProductManufacturer>> GetManufacturers();
-        Task<ProductManufacturer> GetProductManufacturer(int id);
-        Task<IEnumerable<Product>> GetItemsByCategory(int id);
-        public Task<IEnumerable<Product>> GetItemsByManufacturer(int id);
+        Task<ProductManufacturer> GetProductManufacturer(long id);
+        Task<IEnumerable<Product>> GetItemsByCategory(long id);
+        public Task<IEnumerable<Product>> GetItemsByManufacturer(long id);
+
+        public Task<Product> AddNewProduct(Product product);
+        public Task<Product> UpdateProduct(Product product);
+        public Task<Product> DeleteProduct(Product product);
     }
 }

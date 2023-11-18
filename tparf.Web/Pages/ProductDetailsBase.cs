@@ -65,7 +65,7 @@ namespace tparf.Web.Pages
             }
         }
 
-        private async Task<ProductDto> GetProductById(int id)
+        private async Task<ProductDto> GetProductById(long id)
         {
             var productDtos = await ManageProductsLocalStorageService.GetCollection();
 

@@ -47,7 +47,7 @@ namespace tparf.Web.Services
             }
         }
 
-        public async Task<CartItemDto> DeleteItem(int id)
+        public async Task<CartItemDto> DeleteItem(long id)
         {
             try
             {
@@ -66,7 +66,7 @@ namespace tparf.Web.Services
             }
         }
 
-        public async Task<List<CartItemDto>> GetItems(int userId)
+        public async Task<List<CartItemDto>> GetItems(long userId)
         {
             try
             {

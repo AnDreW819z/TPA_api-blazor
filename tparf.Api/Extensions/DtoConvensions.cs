@@ -31,7 +31,9 @@ namespace tparf.Api.Extensions
                         Qty= product.Qty,
                         CategoryId= product.ProductCategory.Id,
                         CategoryName= product.ProductCategory.Name,
-                       
+                        ManufacturerId = product.ProductManufacturer.Id,
+                        ManufacturerName = product.ProductManufacturer.Name
+
                     }).ToList();
         }
 
@@ -50,6 +52,7 @@ namespace tparf.Api.Extensions
                 CategoryName = product.ProductCategory.Name,
                 ManufacturerId = product.ProductManufacturer.Id,
                 ManufacturerName = product.ProductManufacturer.Name
+
             };
         }
 

@@ -36,7 +36,7 @@ namespace tparf.Web.Pages
                 ErrorMessage = ex.Message;
             }
         }
-        protected async Task DeleteCartItem_Click(int id)
+        protected async Task DeleteCartItem_Click(long id)
         {
             var cartItemDto = await ShoppingCartService.DeleteItem(id);
 
@@ -45,7 +45,7 @@ namespace tparf.Web.Pages
 
         }
 
-        protected async Task UpdateQtyCartItem_Click(int id, int qty)
+        protected async Task UpdateQtyCartItem_Click(long id, int qty)
         {
             try
             {
@@ -88,12 +88,12 @@ namespace tparf.Web.Pages
 
         }
 
-        protected async Task UpdateQty_Input(int id)
+        protected async Task UpdateQty_Input(long id)
         {
             await MakeUpdateQtyButtonVisible(id, true);
         }
 
-        private async Task MakeUpdateQtyButtonVisible(int id, bool visible)
+        private async Task MakeUpdateQtyButtonVisible(long id, bool visible)
         {
             await Js.InvokeVoidAsync("MakeUpdateQtyButtonVisible", id, true);
         }
@@ -125,11 +125,11 @@ namespace tparf.Web.Pages
             TotalQuantity = this.ShoppingCartItems.Sum(p => p.Qty);
         }
 
-        private CartItemDto GetCartItem(int id)
+        private CartItemDto GetCartItem(long id)
         {
             return ShoppingCartItems.FirstOrDefault(i => i.Id == id);
         }
-        private async Task RemoveCartItem(int id)
+        private async Task RemoveCartItem(long id)
         {
             var cartItemDto = GetCartItem(id);
 

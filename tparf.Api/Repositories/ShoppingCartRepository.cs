@@ -15,7 +15,7 @@ namespace tparf.Api.Repositories
             _tparfDbContext = tparfDbContext;
         }
 
-        private async Task<bool> CartItemExists(int cartId, int productId)
+        private async Task<bool> CartItemExists(long cartId, long productId)
         {
             return await _tparfDbContext.CartItems.AnyAsync(c => c.CartId == cartId &&
                                                                      c.ProductId == productId);
@@ -46,7 +46,7 @@ namespace tparf.Api.Repositories
 
         }
 
-        public async Task<CartItem> DeleteItem(int id)
+        public async Task<CartItem> DeleteItem(long id)
         {
             var item = await _tparfDbContext.CartItems.FindAsync(id);
 
@@ -60,7 +60,7 @@ namespace tparf.Api.Repositories
 
         }
 
-        public async Task<CartItem> GetItem(int id)
+        public async Task<CartItem> GetItem(long id)
         {
             return await (from cart in _tparfDbContext.Carts
                           join cartItem in _tparfDbContext.CartItems
@@ -75,7 +75,7 @@ namespace tparf.Api.Repositories
                           }).SingleOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<CartItem>> GetItems(int userId)
+        public async Task<IEnumerable<CartItem>> GetItems(long userId)
         {
             return await (from cart in _tparfDbContext.Carts
                           join cartItem in _tparfDbContext.CartItems
@@ -90,7 +90,7 @@ namespace tparf.Api.Repositories
                           }).ToListAsync();
         }
 
-        public async Task<CartItem> UpdateQty(int id, CartItemQtyUpdateDto cartItemQtyUpdateDto)
+        public async Task<CartItem> UpdateQty(long id, CartItemQtyUpdateDto cartItemQtyUpdateDto)
         {
             var item = await _tparfDbContext.CartItems.FindAsync(id);
 

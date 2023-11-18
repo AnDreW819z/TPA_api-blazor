@@ -5,8 +5,8 @@ namespace tparf.Web.Services.Contracts
     public interface IProductService
     {
         Task<IEnumerable<ProductDto>> GetItems();
-        Task<ProductDto> GetItem(int id);
+        Task<ProductDto> GetItem(long id);
         Task<IEnumerable<ProductCategoryDto>> GetProductCategories();
-        Task<IEnumerable<ProductDto>> GetItemsByCategory(int categoryId);
+        Task<IEnumerable<ProductDto>> GetItemsByCategory(long categoryId);
     }
 }

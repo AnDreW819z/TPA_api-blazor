@@ -8,9 +8,9 @@ namespace tparf.Models.Dtos
 {
     public class CartItemDto
     {
-        public int Id { get; set; }
-        public int ProductId { get; set; }
-        public int CartId { get; set; }
+        public long Id { get; set; }
+        public long ProductId { get; set; }
+        public long CartId { get; set; }
         public string ProductName { get; set;}
         public string ProductDescription { get; set;}
         public string ProductImageUrl { get; set;}

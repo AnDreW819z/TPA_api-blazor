@@ -20,13 +20,13 @@ namespace tparf.Api.Repositories
 
         }
 
-        public async Task<ProductCategory> GetCategory(int id)
+        public async Task<ProductCategory> GetCategory(long id)
         {
             var category = await _tparfDbContext.ProductCategories.SingleOrDefaultAsync(c => c.Id == id);
             return category;
         }
 
-        public async Task<Product> GetItem(int id)
+        public async Task<Product> GetItem(long id)
         {
             var product = await _tparfDbContext.Products.FindAsync(id);
             return product;
@@ -40,7 +40,7 @@ namespace tparf.Api.Repositories
             return products;
         }
 
-        public async Task<IEnumerable<Product>> GetItemsByCategory(int id)
+        public async Task<IEnumerable<Product>> GetItemsByCategory(long id)
         {
             var products = await _tparfDbContext.Products
                                      .Include(p => p.ProductCategory)
@@ -54,18 +54,35 @@ namespace tparf.Api.Repositories
             return manufacturers;
         }
 
-        public async Task<ProductManufacturer> GetProductManufacturer(int id)
+        public async Task<ProductManufacturer> GetProductManufacturer(long id)
         {
             var manufacturer = await _tparfDbContext.ProductManufacturers.FindAsync(id);
             return manufacturer;
         }
 
-        public async Task<IEnumerable<Product>> GetItemsByManufacturer(int id)
+        public async Task<IEnumerable<Product>> GetItemsByManufacturer(long id)
         {
             var products = await _tparfDbContext.Products
                                      .Include(p => p.ProductManufacturer)
                                      .Where(p => p.ManufacturerId == id).ToListAsync();
             return products;
+        }
+
+        public async Task<Product> AddNewProduct(Product product)
+        {
+            await _tparfDbContext.Products.AddAsync(product);
+            await _tparfDbContext.SaveChangesAsync();
+            return product;
+        }
+
+        public Task<Product> UpdateProduct(Product product)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Product> DeleteProduct(Product product)
+        {
+            throw new NotImplementedException();
         }
     }
 }

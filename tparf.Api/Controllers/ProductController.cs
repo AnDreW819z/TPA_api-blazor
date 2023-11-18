@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using tparf.Api.Entities;
 using tparf.Api.Extensions;
 using tparf.Api.Repositories;
 using tparf.Api.Repositories.Contracts;
@@ -7,7 +8,7 @@ using tparf.Models.Dtos;
 namespace tparf.Api.Controllers
 {
     [ApiController]
-    [Route("api/Product")]
+    [Route("api/[controller]")]
     public class ProductController : ControllerBase
     {
         private readonly IProductRepository _productRepository;
@@ -42,12 +43,13 @@ namespace tparf.Api.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<IEnumerable<ProductDto>>> GetItem(int id)
+        public async Task<ActionResult<IEnumerable<ProductDto>>> GetItem(long id)
         {
             try
             {
-                var product = await _productRepository.GetItem(id);
-
+                var product = await this._productRepository.GetItem(id);
+                //var productCategories = await _productRepository.GetCategories();
+                //var productManufacturers = await _productRepository.GetManufacturers();
                 if (product == null)
                 {
                     return BadRequest();
@@ -106,6 +108,22 @@ namespace tparf.Api.Controllers
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                                 "Error retrieving data from the database");
+            }
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddNewProduct([FromBody] Product product)
+        {
+            try
+            {
+                
+                //var productDto = product.ConvertToDto();
+                return Ok(await _productRepository.AddNewProduct(product));
+            }
+            catch
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                               "Error retrieving data from the database");
             }
         }
     }

@@ -13,7 +13,7 @@ namespace tparf.Web.Services
             _httpClient = httpClient;
         }
 
-        public async Task<ProductDto> GetItem(int id)
+        public async Task<ProductDto> GetItem(long id)
         {
             try
             {
@@ -63,7 +63,7 @@ namespace tparf.Web.Services
             }
         }
 
-        public async Task<IEnumerable<ProductDto>> GetItemsByCategory(int categoryId)
+        public async Task<IEnumerable<ProductDto>> GetItemsByCategory(long categoryId)
         {
             try
             {

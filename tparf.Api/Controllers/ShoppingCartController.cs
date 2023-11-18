@@ -22,7 +22,7 @@ namespace tparf.Api.Controllers
 
         [HttpGet]
         [Route("{userId}/GetItems")]
-        public async Task<ActionResult<IEnumerable<CartItemDto>>> GetItems(int userId)
+        public async Task<ActionResult<IEnumerable<CartItemDto>>> GetItems(long userId)
         {
             try
             {
@@ -53,7 +53,7 @@ namespace tparf.Api.Controllers
         }
 
         [HttpGet("{id:int}")]
-        public async Task<ActionResult<CartItemDto>> GetItem(int id)
+        public async Task<ActionResult<CartItemDto>> GetItem(long id)
         {
             try
             {
@@ -110,7 +110,7 @@ namespace tparf.Api.Controllers
         }
 
         [HttpDelete("{id:int}")]
-        public async Task<ActionResult<CartItemDto>> DeleteItem(int id)
+        public async Task<ActionResult<CartItemDto>> DeleteItem(long id)
         {
             try
             {
@@ -137,7 +137,7 @@ namespace tparf.Api.Controllers
             }
         }
         [HttpPatch("{id:int}")]
-        public async Task<ActionResult<CartItemDto>> UpdateQty(int id, CartItemQtyUpdateDto cartItemQtyUpdateDto)
+        public async Task<ActionResult<CartItemDto>> UpdateQty(long id, CartItemQtyUpdateDto cartItemQtyUpdateDto)
         {
             try
             {
