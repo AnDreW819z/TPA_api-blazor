@@ -48,8 +48,8 @@ namespace tparf.Api.Controllers
             try
             {
                 var product = await this._productRepository.GetItem(id);
-                //var productCategories = await _productRepository.GetCategories();
-                //var productManufacturers = await _productRepository.GetManufacturers();
+                var productCategories = await _productRepository.GetCategories();
+                var productManufacturers = await _productRepository.GetManufacturers();
                 if (product == null)
                 {
                     return BadRequest();
@@ -98,7 +98,7 @@ namespace tparf.Api.Controllers
             try
             {
                 var products = await _productRepository.GetItemsByCategory(categoryId);
-
+                var productManufacturers = await _productRepository.GetManufacturers();
                 var productDtos = products.ConvertToDto();
 
                 return Ok(productDtos);
@@ -112,18 +112,59 @@ namespace tparf.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> AddNewProduct([FromBody] Product product)
+        public async Task<IActionResult> AddNewProduct([FromBody] CreateProductDto productDto)
         {
             try
             {
                 
-                //var productDto = product.ConvertToDto();
-                return Ok(await _productRepository.AddNewProduct(product));
+                var newProduct = await _productRepository.AddNewProduct(productDto);
+
+                if (newProduct == null)
+                {
+                    return NoContent();
+                }
+                return Ok(productDto);
             }
             catch
             {
                 return StatusCode(StatusCodes.Status500InternalServerError,
                                "Error retrieving data from the database");
+            }
+        }
+
+        [HttpPut]
+        public async Task<IActionResult> UpdateProduct(long id, UpdateProductDto productDto)
+        {
+            try 
+            { 
+                var product = await _productRepository.UpdateProduct(id, productDto);
+                if (product == null)
+                {
+                    return NotFound();
+                }
+
+                var responce = await _productRepository.GetItem(product.Id);
+                var result = responce.ConvertToDto();
+                return Ok(result);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        public async Task<IActionResult> DeleteProduct(long id)
+        {
+            try
+            {
+                var product = await _productRepository.DeleteProduct(id);
+                
+                return Ok("Товар успешно удален");
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
     }

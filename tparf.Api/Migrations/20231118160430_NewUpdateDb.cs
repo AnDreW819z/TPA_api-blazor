@@ -5,7 +5,7 @@
 namespace tparf.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class NewIdLong : Migration
+    public partial class NewUpdateDb : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

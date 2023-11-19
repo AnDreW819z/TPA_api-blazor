@@ -1,9 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Text.Json.Serialization;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace tparf.Api.Entities
+namespace tparf.Models.Dtos
 {
-    public class Product
+    public class CreateProductDto
     {
         public long Id { get; set; }
         public string Name { get; set; }
@@ -13,10 +16,6 @@ namespace tparf.Api.Entities
         public decimal Price { get; set; }
         public int Qty { get; set; }
         public long CategoryId { get; set; }
-        [ForeignKey("CategoryId")]
-        public virtual ProductCategory ProductCategory { get; set; }
         public long ManufacturerId { get; set; }
-        [ForeignKey("ManufacturerId")]
-        public virtual ProductManufacturer ProductManufacturer { get; set; }
     }
 }

@@ -2,6 +2,7 @@
 using tparf.Api.Data;
 using tparf.Api.Entities;
 using tparf.Api.Repositories.Contracts;
+using tparf.Models.Dtos;
 
 namespace tparf.Api.Repositories
 {
@@ -24,6 +25,11 @@ namespace tparf.Api.Repositories
         {
             var category = await _tparfDbContext.ProductCategories.SingleOrDefaultAsync(c => c.Id == id);
             return category;
+        }
+        public async Task<ProductManufacturer> GetManufacturer(long id)
+        {
+            ProductManufacturer manufacturer = await _tparfDbContext.ProductManufacturers.SingleOrDefaultAsync(c => c.Id == id);
+            return manufacturer;
         }
 
         public async Task<Product> GetItem(long id)
@@ -68,21 +74,69 @@ namespace tparf.Api.Repositories
             return products;
         }
 
-        public async Task<Product> AddNewProduct(Product product)
+        private async Task<bool> ProductExist(long productId)
         {
-            await _tparfDbContext.Products.AddAsync(product);
-            await _tparfDbContext.SaveChangesAsync();
+            return await _tparfDbContext.Products.AnyAsync(c => c.Id== productId);
+        }
+
+        public async Task<Product> AddNewProduct(CreateProductDto productDto)
+        {
+            if (await ProductExist(productDto.Id) == false)
+            {
+                var cat = await GetCategory(productDto.CategoryId);
+                var manufact = await GetManufacturer(productDto.ManufacturerId);
+                Product product= new Product
+                {
+                    //Id = productDto.Id,
+                    Name = productDto.Name,
+                    Description = productDto.Description,
+                    Article = productDto.Article,
+                    ImageUrl = productDto.ImageUrl,
+                    Price = productDto.Price,
+                    Qty = productDto.Qty,
+                    CategoryId= productDto.CategoryId,
+                    ManufacturerId= productDto.ManufacturerId,
+                };
+                if(product != null)
+                {
+                    var result = await _tparfDbContext.Products.AddAsync(product);
+                    await _tparfDbContext.SaveChangesAsync();
+                    return result.Entity;
+                }
+            }
+            return null;
+        }
+
+        public async Task<Product> UpdateProduct(long id, UpdateProductDto productDto)
+        {
+            var cat = await GetCategory(productDto.CategoryId);
+            var manufact = await GetManufacturer(productDto.ManufacturerId);
+            var product = await _tparfDbContext.Products.FindAsync(id);
+            if(product != null)
+            {
+                product.Name = productDto.Name;
+                product.Description = productDto.Description;
+                product.Article = productDto.Article;
+                product.ImageUrl = productDto.ImageUrl;
+                product.Price = productDto.Price;
+                product.Qty = productDto.Qty;
+                product.CategoryId = productDto.CategoryId;
+                product.ManufacturerId = productDto.ManufacturerId;
+                await _tparfDbContext.SaveChangesAsync();
+                return product;
+            }
+            return null;
+        }
+
+        public async Task<Product> DeleteProduct(long id)
+        {
+            Product product = await _tparfDbContext.Products.FindAsync(id);
+            if(product != null )
+            {
+                _tparfDbContext.Products.Remove(product);
+                await _tparfDbContext.SaveChangesAsync();
+            }
             return product;
-        }
-
-        public Task<Product> UpdateProduct(Product product)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<Product> DeleteProduct(Product product)
-        {
-            throw new NotImplementedException();
         }
     }
 }

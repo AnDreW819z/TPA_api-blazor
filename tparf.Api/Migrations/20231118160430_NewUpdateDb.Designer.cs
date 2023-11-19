@@ -11,15 +11,15 @@ using tparf.Api.Data;
 namespace tparf.Api.Migrations
 {
     [DbContext(typeof(TparfDbContext))]
-    [Migration("20231118001431_NewIdLong")]
-    partial class NewIdLong
+    [Migration("20231118160430_NewUpdateDb")]
+    partial class NewUpdateDb
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "7.0.9")
+                .HasAnnotation("ProductVersion", "7.0.12")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
