@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace tparf.Models.Dtos
+namespace tparf.Models.Dtos.Products
 {
     public class ProductDto
     {
@@ -18,6 +18,6 @@ namespace tparf.Models.Dtos
         public long CategoryId { get; set; }
         public string? CategoryName { get; set; }
         public long ManufacturerId { get; set; }
-        public string? ManufacturerName { get; set;}
+        public string? ManufacturerName { get; set; }
     }
 }

@@ -1,8 +1,9 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using tparf.Api.Extensions;
 using tparf.Api.Repositories.Contracts;
-using tparf.Models.Dtos;
+using tparf.Models.Dtos.CartItems;
 
 namespace tparf.Api.Controllers
 {
@@ -79,6 +80,7 @@ namespace tparf.Api.Controllers
         }
 
         [HttpPost]
+        [Authorize]
         public async Task<ActionResult<CartItemDto>> PostItem([FromBody] CartItemToAddDto cartItemToAddDto)
         {
             try
@@ -110,6 +112,7 @@ namespace tparf.Api.Controllers
         }
 
         [HttpDelete("{id:int}")]
+        [Authorize]
         public async Task<ActionResult<CartItemDto>> DeleteItem(long id)
         {
             try
@@ -137,6 +140,7 @@ namespace tparf.Api.Controllers
             }
         }
         [HttpPatch("{id:int}")]
+        [Authorize]
         public async Task<ActionResult<CartItemDto>> UpdateQty(long id, CartItemQtyUpdateDto cartItemQtyUpdateDto)
         {
             try

@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using tparf.Api.Data;
 
@@ -11,9 +12,11 @@ using tparf.Api.Data;
 namespace tparf.Api.Migrations
 {
     [DbContext(typeof(TparfDbContext))]
-    partial class TparfDbContextModelSnapshot : ModelSnapshot
+    [Migration("20231120012436_Inital")]
+    partial class Inital
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

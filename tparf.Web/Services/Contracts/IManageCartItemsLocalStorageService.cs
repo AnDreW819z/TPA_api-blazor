@@ -1,4 +1,4 @@
-﻿using tparf.Models.Dtos;
+﻿using tparf.Models.Dtos.CartItems;
 
 namespace tparf.Web.Services.Contracts
 {

@@ -1,9 +1,12 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+using System.Data;
 using tparf.Api.Entities;
 using tparf.Api.Extensions;
 using tparf.Api.Repositories;
 using tparf.Api.Repositories.Contracts;
 using tparf.Models.Dtos;
+using tparf.Models.Dtos.Products;
 
 namespace tparf.Api.Controllers
 {
@@ -43,6 +46,7 @@ namespace tparf.Api.Controllers
         }
 
         [HttpGet("{id:int}")]
+        [Authorize]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetItem(long id)
         {
             try
@@ -112,6 +116,7 @@ namespace tparf.Api.Controllers
         }
 
         [HttpPost]
+        //[Authorize(Roles = "Administrator, Moderator")]
         public async Task<IActionResult> AddNewProduct([FromBody] CreateProductDto productDto)
         {
             try
@@ -133,6 +138,7 @@ namespace tparf.Api.Controllers
         }
 
         [HttpPut]
+        [Authorize(Roles = "ADMIN, OWNER")]
         public async Task<IActionResult> UpdateProduct(long id, UpdateProductDto productDto)
         {
             try 
@@ -154,6 +160,7 @@ namespace tparf.Api.Controllers
         }
 
         [HttpDelete]
+        [Authorize(Roles = "ADMIN, OWNER")]
         public async Task<IActionResult> DeleteProduct(long id)
         {
             try

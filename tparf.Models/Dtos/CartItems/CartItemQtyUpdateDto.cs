@@ -4,11 +4,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace tparf.Models.Dtos
+namespace tparf.Models.Dtos.CartItems
 {
     public class CartItemQtyUpdateDto
     {
         public long CartItemId { get; set; }
-        public int Qty { get; set;}
+        public int Qty { get; set; }
     }
 }

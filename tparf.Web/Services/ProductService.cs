@@ -1,6 +1,7 @@
 ﻿using System.Net.Http;
 using System.Net.Http.Json;
 using tparf.Models.Dtos;
+using tparf.Models.Dtos.Products;
 using tparf.Web.Services.Contracts;
 
 namespace tparf.Web.Services

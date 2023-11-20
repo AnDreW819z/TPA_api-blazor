@@ -1,6 +1,8 @@
 ﻿using System.Runtime.CompilerServices;
 using tparf.Api.Entities;
 using tparf.Models.Dtos;
+using tparf.Models.Dtos.CartItems;
+using tparf.Models.Dtos.Products;
 
 namespace tparf.Api.Extensions
 {

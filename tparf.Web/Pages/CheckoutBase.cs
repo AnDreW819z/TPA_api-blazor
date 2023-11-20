@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
-using tparf.Models.Dtos;
+using tparf.Models.Dtos.CartItems;
 using tparf.Web.Services.Contracts;
 
 namespace tparf.Web.Pages

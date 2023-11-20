@@ -2,7 +2,7 @@
 using tparf.Api.Data;
 using tparf.Api.Entities;
 using tparf.Api.Repositories.Contracts;
-using tparf.Models.Dtos;
+using tparf.Models.Dtos.CartItems;
 
 namespace tparf.Api.Repositories
 {

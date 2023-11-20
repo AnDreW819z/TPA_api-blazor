@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace tparf.Models.Dtos
+namespace tparf.Models.Dtos.Products
 {
     public class CreateProductDto
     {

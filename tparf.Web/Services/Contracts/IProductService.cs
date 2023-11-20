@@ -1,4 +1,5 @@
 ﻿using tparf.Models.Dtos;
+using tparf.Models.Dtos.Products;
 
 namespace tparf.Web.Services.Contracts
 {

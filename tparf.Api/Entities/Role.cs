@@ -2,8 +2,8 @@
 {
     public class Role
     {
-        public long Id { get; set; }
-        public string Name { get; set; }
-        public List<User> Users { get; set; }
+        public const string Member = "Member";
+        public const string Moderator = "Moderator";
+        public const string Administrator = "Administrator";
     }
 }
