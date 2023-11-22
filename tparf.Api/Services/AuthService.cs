@@ -14,10 +14,11 @@ namespace tparf.Api.Services
         private readonly RoleManager<IdentityRole<long>> _roleManager;
         private readonly TparfDbContext _context;
 
-        public AuthService(TparfDbContext context, UserManager<ApplicationUser> userManager)
+        public AuthService(TparfDbContext context, UserManager<ApplicationUser> userManager, RoleManager<IdentityRole<long>> roleManager)
         {
             _context = context;
             _userManager = userManager;
+            _roleManager= roleManager;
         }
 
         public async Task<AuthServiceResponseDto> MakeAdministratorAsync(UpdatePermissionDto updatePermissionDto)
@@ -62,11 +63,11 @@ namespace tparf.Api.Services
 
         public async Task<AuthServiceResponseDto> SeedRolesAsync()
         {
-            bool isOwnerRoleExists = await _roleManager.RoleExistsAsync(Role.Moderator);
-            bool isAdminRoleExists = await _roleManager.RoleExistsAsync(Role.Administrator);
-            bool isUserRoleExists = await _roleManager.RoleExistsAsync(Role.Member);
+            bool isModeratorRoleExists = await _roleManager.RoleExistsAsync(Role.Moderator);
+            bool isAdministratorRoleExists = await _roleManager.RoleExistsAsync(Role.Administrator);
+            bool isMemberRoleExists = await _roleManager.RoleExistsAsync(Role.Member);
 
-            if (isOwnerRoleExists && isAdminRoleExists && isUserRoleExists)
+            if (isModeratorRoleExists && isAdministratorRoleExists && isMemberRoleExists)
                 return new AuthServiceResponseDto()
                 {
                     IsSucceed = true,

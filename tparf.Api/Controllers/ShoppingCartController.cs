@@ -8,6 +8,7 @@ using tparf.Models.Dtos.CartItems;
 namespace tparf.Api.Controllers
 {
     [Route("api/[controller]")]
+    
     [ApiController]
     public class ShoppingCartController : ControllerBase
     {
@@ -54,6 +55,7 @@ namespace tparf.Api.Controllers
         }
 
         [HttpGet("{id:int}")]
+        [AllowAnonymous]
         public async Task<ActionResult<CartItemDto>> GetItem(long id)
         {
             try

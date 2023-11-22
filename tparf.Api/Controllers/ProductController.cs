@@ -21,6 +21,7 @@ namespace tparf.Api.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetItems()
         {
             try
@@ -46,12 +47,12 @@ namespace tparf.Api.Controllers
         }
 
         [HttpGet("{id:int}")]
-        [Authorize]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetItem(long id)
         {
             try
             {
-                var product = await this._productRepository.GetItem(id);
+                var product = await _productRepository.GetItem(id);
                 var productCategories = await _productRepository.GetCategories();
                 var productManufacturers = await _productRepository.GetManufacturers();
                 if (product == null)
@@ -75,6 +76,7 @@ namespace tparf.Api.Controllers
             }
         }
         [HttpGet]
+        [AllowAnonymous]
         [Route(nameof(GetProductCategories))]
         public async Task<ActionResult<IEnumerable<ProductCategoryDto>>> GetProductCategories()
         {
@@ -96,6 +98,7 @@ namespace tparf.Api.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         [Route("{categoryId}/GetItemsByCategory")]
         public async Task<ActionResult<IEnumerable<ProductDto>>> GetItemsByCategory(int categoryId)
         {
@@ -116,7 +119,7 @@ namespace tparf.Api.Controllers
         }
 
         [HttpPost]
-        //[Authorize(Roles = "Administrator, Moderator")]
+        [Authorize(Roles = "Administrator, Moderator")]
         public async Task<IActionResult> AddNewProduct([FromBody] CreateProductDto productDto)
         {
             try
@@ -138,7 +141,7 @@ namespace tparf.Api.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "ADMIN, OWNER")]
+        [Authorize(Roles = "Administrator, Moderator")]
         public async Task<IActionResult> UpdateProduct(long id, UpdateProductDto productDto)
         {
             try 
@@ -160,7 +163,7 @@ namespace tparf.Api.Controllers
         }
 
         [HttpDelete]
-        [Authorize(Roles = "ADMIN, OWNER")]
+        [Authorize(Roles = "Administrator, Moderator")]
         public async Task<IActionResult> DeleteProduct(long id)
         {
             try
