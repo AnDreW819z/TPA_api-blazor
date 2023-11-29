@@ -69,6 +69,7 @@ namespace tparf.Api.Controllers
 
             return Ok(new AuthResponse
             {
+                Id= user.Id,
                 Username = user.UserName!,
                 Email = user.Email!,
                 Token = accessToken,
