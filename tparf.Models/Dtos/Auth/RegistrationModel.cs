@@ -4,10 +4,11 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace tparf.Models.Dtos.Auth
 {
-    public class RegisterRequest
+    public class RegistrationModel
     {
         [Required(ErrorMessage = "FirstName is required")]
         public string FirstName { get; set; }

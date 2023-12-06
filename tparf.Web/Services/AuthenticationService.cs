@@ -19,25 +19,23 @@ namespace tparf.Web.Services
             _httpClient= httpClient;
             _localStorage= localStorage;
             _authStateProvider = authStateProvider;
-            baseUrl = "https://localhost:7187/api/Auth";
+            baseUrl = "https://localhost:7187/api/Authorization";
         }
-        public async Task<AuthResponse> Login(AuthRequest model)
+        public async Task<LoginResponse> Login(LoginModel model)
         {
-            //var responce = new AuthServiceResponseDto();
+
             var loginResult = await _httpClient.PostAsJsonAsync($"{baseUrl}/login", model);
-            //if (loginResult.IsSuccessStatusCode)
-            //{
-            //    var responce = new AuthResponse {Email = "error", RefreshToken = "error", Token = "", Username = "" };
-            //    return responce;
-            //}
-            var loginResponseContent = await loginResult.Content.ReadFromJsonAsync<AuthResponse>();
+            if (!loginResult.IsSuccessStatusCode)
+                return new LoginResponse { StatusCode = 0, Message = "Server error" };
+            var loginResponseContent = await loginResult.Content.ReadFromJsonAsync<LoginResponse>();
             if (loginResponseContent != null)
             {
                 _localStorage.SetItemAsync("accessToken", loginResponseContent.Token);
-                ((AuthProvider)_authStateProvider).NotifyUserAuthentication(model.Email);
+                ((AuthProvider)_authStateProvider).NotifyUserAuthentication(loginResponseContent.Token);
                 _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("bearer", loginResponseContent.Token);
             }
             return loginResponseContent;
+
         }
         public async Task Logout()
         {

@@ -20,5 +20,6 @@ namespace tparf.Api.Data
         public DbSet<Product> Products { get; set; }
         public DbSet<ProductCategory> ProductCategories { get; set; }
         public DbSet<ProductManufacturer> ProductManufacturers { get; set; }
-    }
+        public DbSet<TokenInfo> TokenInfo { get; set; }
+    }   
 }

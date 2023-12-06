@@ -8,9 +8,7 @@ namespace tparf.Api.Entities
     {
         public string FirstName { get; set; }
         public string LastName { get; set; }
+        public string Name { get; set; }
         public string CompanyName { get; set; }
-        public string? RefreshToken { get; set; }
-        public DateTime RefreshTokenExpiryTime { get; set; }
-
     }
 }

@@ -4,7 +4,7 @@ namespace tparf.Web.Services.Contracts
 {
     public interface IAuthenticationService
     {
-        Task<AuthResponse> Login(AuthRequest model);
+        public Task<LoginResponse> Login(LoginModel model);
         Task Logout();
     }
 }

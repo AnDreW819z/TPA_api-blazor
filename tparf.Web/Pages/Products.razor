@@ -1,6 +1,6 @@
 ﻿
 @page "/"
-
+@attribute [Authorize(Roles = "Admin")]
 @inherits ProductsBase
 
 @if(Products == null && ErrorMessage == null)
@@ -17,6 +17,8 @@ else
     <h3 class="mb-5">Ассортимент</h3>
 
     var productCount = Products.Count();
+    <AuthorizeView>
+        <Authorized>
 
     @if (productCount > 0)
     {
@@ -31,5 +33,10 @@ else
         }
 
     }
+        </Authorized>
+        <NotAuthorized>
+        You are not authorized
+    </NotAuthorized>
+      </AuthorizeView>
 
 }

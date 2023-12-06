@@ -7,11 +7,12 @@ using System.Threading.Tasks;
 
 namespace tparf.Models.Dtos.Auth
 {
-    public class AuthRequest
+    public class LoginModel
     {
         [Required]
-        public string Email { get; set; } = null!;
+        public string? Email { get; set; }
+
         [Required]
-        public string Password { get; set; } = null!;
+        public string? Password { get; set; }
     }
 }

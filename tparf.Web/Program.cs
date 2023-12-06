@@ -20,7 +20,6 @@ builder.Services.AddScoped<IShoppingCartService, ShoppingCartService>();
 builder.Services.AddScoped<AuthenticationStateProvider, AuthProvider>();
 builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
 
-
 builder.Services.AddAuthorizationCore();
 builder.Services.AddBlazoredLocalStorage();
 

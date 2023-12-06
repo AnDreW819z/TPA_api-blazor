@@ -32,16 +32,16 @@
 </div>
 
 @code {
-    AuthRequest loginModel = new();
-    AuthResponse loginResponse = new();
+    LoginModel loginModel = new();
+    LoginResponse loginResponse = new();
     async Task DoLogin()
     {
         loginResponse.Email = "Wait...";
         loginResponse = await _authService.Login(loginModel);
-        if (loginResponse.Token != "")
+        if (loginResponse.StatusCode == 200)
         {
             _navMgr.NavigateTo("/");
-            Console.WriteLine($"{loginResponse.Token} + {loginResponse.Email}");
+            Console.WriteLine($"{loginResponse.Token} + {loginResponse.Email} + CartId = {loginResponse.CartId}");
         }
             
     }

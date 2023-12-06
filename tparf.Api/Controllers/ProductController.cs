@@ -119,7 +119,7 @@ namespace tparf.Api.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Administrator, Moderator")]
+        [Authorize(Roles = "Admin, Owner")]
         public async Task<IActionResult> AddNewProduct([FromBody] CreateProductDto productDto)
         {
             try
@@ -141,7 +141,7 @@ namespace tparf.Api.Controllers
         }
 
         [HttpPut]
-        [Authorize(Roles = "Administrator, Moderator")]
+        [Authorize(Roles = "Admin, Owner")]
         public async Task<IActionResult> UpdateProduct(long id, UpdateProductDto productDto)
         {
             try 
@@ -163,7 +163,7 @@ namespace tparf.Api.Controllers
         }
 
         [HttpDelete]
-        [Authorize(Roles = "Administrator, Moderator")]
+        [Authorize(Roles = "Admin, Owner")]
         public async Task<IActionResult> DeleteProduct(long id)
         {
             try

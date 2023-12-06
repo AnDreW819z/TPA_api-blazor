@@ -1,10 +1,14 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System.Security.Claims;
 using tparf.Api.Entities;
+using tparf.Models.Dtos.Auth;
 
 namespace tparf.Api.Services
 {
     public interface ITokenService
     {
-        string CreateToken(ApplicationUser user, List<IdentityRole<long>> role);
+        TokenResponse GetToken(IEnumerable<Claim> claim);
+        string GetRefreshToken();
+        ClaimsPrincipal GetPrincipalFromExpiredToken(string token);
     }
 }

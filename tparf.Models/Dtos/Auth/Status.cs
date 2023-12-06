@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace tparf.Models.Dtos.Auth
 {
-    public class AuthServiceResponseDto
+    public class Status
     {
-        public bool IsSucceed { get; set; }
-        public string Message { get; set; }
+        public int StatusCode { get; set; }
+        public string? Message { get; set; }
     }
 }
