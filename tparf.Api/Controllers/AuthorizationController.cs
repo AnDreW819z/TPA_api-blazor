@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Text;
 using tparf.Api.Data;
 using tparf.Api.Entities;
+using tparf.Api.Extensions;
 using tparf.Api.Services;
 using tparf.Models.Dtos.Auth;
 
@@ -158,7 +161,7 @@ namespace tparf.Api.Controllers
             if (userExists != null)
             {
                 status.StatusCode = 0;
-                status.Message = "Invalid username";
+                status.Message = "Пользователь с такой электронной почтой уже существует";
                 return Ok(status);
             }
             var user = new ApplicationUser
@@ -198,11 +201,13 @@ namespace tparf.Api.Controllers
             {
                 await userManager.AddToRoleAsync(user, UserRoles.User);
             }
-            status.StatusCode = 1;
-            status.Message = "Sucessfully registered";
+
+            status.StatusCode = 200;
+            status.Message = "Вы успешно зарегестрированы";
+
             return Ok(status);
 
         }
-
+        
     }
 }

@@ -10,24 +10,23 @@ namespace tparf.Models.Dtos.Auth
 {
     public class RegistrationModel
     {
-        [Required(ErrorMessage = "FirstName is required")]
+        [Required(ErrorMessage = "Заполните поле Имя")]
         public string FirstName { get; set; }
 
-        [Required(ErrorMessage = "LastName is required")]
+        [Required(ErrorMessage = "Заполните поле Фамилия")]
         public string LastName { get; set; }
 
-        public string UserName { get; set; }
-
-        [Required(ErrorMessage = "CompanyName is required")]
+        [Required(ErrorMessage = "Заполните поле Название организации")]
         public string CompanyName { get; set; }
 
-        [Required(ErrorMessage = "Email is required")]
-        public string Email { get; set; }
-
-        [Required(ErrorMessage = "PhoneNumber is required")]
+        [Required(ErrorMessage = "Заполните поле Номер телефона")]
         public string PhoneNumber { get; set; }
 
-        [Required(ErrorMessage = "Password is required")]
+        [Required(ErrorMessage = "Заполните поле Email")]
+        [DataType(DataType.EmailAddress)]
+        public string Email { get; set; }
+
+        [Required(ErrorMessage = "Заполните поле Пароль")]
         public string Password { get; set; }
 
         [Required]

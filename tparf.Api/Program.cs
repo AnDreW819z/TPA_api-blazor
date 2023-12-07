@@ -32,6 +32,11 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole<long>>()
     .AddDefaultTokenProviders()
     .AddSignInManager<SignInManager<ApplicationUser>>();
 
+//builder.Services.Configure<IdentityOptions>(opts =>
+//{
+//    opts.SignIn.RequireConfirmedEmail = true;
+//});
+
 // Add Cors
 builder.Services.AddCors(c => c.AddPolicy("cors", opt =>
 {
