@@ -6,10 +6,11 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 using System.Text;
+using tparf.Api.Interfaces;
 using tparf.Api.Data;
 using tparf.Api.Entities;
+using tparf.Api.Interfaces;
 using tparf.Api.Repositories;
-using tparf.Api.Repositories.Contracts;
 using tparf.Api.Services;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -22,8 +23,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Add Db
-builder.Services.AddDbContextPool<TparfDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("tparfConnection")));
+builder.Services.AddDbContext<TparfDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("tparfConnection")), ServiceLifetime.Transient);
 
 // Add Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<long>>()
@@ -89,10 +90,14 @@ builder.Services.AddAuthentication(options =>
 //        .Build());
 
 // Inject app Dependencies (Dependency Injection)
+builder.Services.AddScoped<IManufacturerRepository, ManufacturerRepository>();
+builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<ISubcategoryRepository, SubcategoruRepository>();
 builder.Services.AddTransient<ITokenService, TokenService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
+builder.Services.AddScoped<ITpaProductRepository, TpaProductRepository>();
 
 
 builder.Services.AddSwaggerGen(option =>

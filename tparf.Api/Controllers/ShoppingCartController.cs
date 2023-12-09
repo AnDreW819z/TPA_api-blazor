@@ -1,8 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using tparf.Api.Interfaces;
 using tparf.Api.Extensions;
-using tparf.Api.Repositories.Contracts;
 using tparf.Models.Dtos.CartItems;
 
 namespace tparf.Api.Controllers

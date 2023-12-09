@@ -6,6 +6,7 @@ using System.Security.Cryptography;
 using System.Text;
 using tparf.Api.Entities;
 using tparf.Api.Extensions;
+using tparf.Api.Interfaces;
 using tparf.Models.Dtos.Auth;
 
 namespace tparf.Api.Services

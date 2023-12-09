@@ -3,7 +3,7 @@ using System.Security.Claims;
 using tparf.Api.Entities;
 using tparf.Models.Dtos.Auth;
 
-namespace tparf.Api.Services
+namespace tparf.Api.Interfaces
 {
     public interface ITokenService
     {

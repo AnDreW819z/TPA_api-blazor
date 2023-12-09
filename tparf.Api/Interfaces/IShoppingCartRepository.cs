@@ -1,7 +1,7 @@
 ﻿using tparf.Api.Entities;
 using tparf.Models.Dtos.CartItems;
 
-namespace tparf.Api.Repositories.Contracts
+namespace tparf.Api.Interfaces
 {
     public interface IShoppingCartRepository
     {

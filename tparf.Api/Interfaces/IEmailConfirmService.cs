@@ -1,6 +1,6 @@
 ﻿using tparf.Models.Dtos.Auth;
 
-namespace tparf.Api.Services
+namespace tparf.Api.Interfaces
 {
     public interface IEmailConfirmService
     {

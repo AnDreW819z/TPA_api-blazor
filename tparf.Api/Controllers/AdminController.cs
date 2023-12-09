@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using tparf.Api.Services;
+using tparf.Api.Interfaces;
 using tparf.Models.Dtos.Auth;
 
 namespace tparf.Api.Controllers

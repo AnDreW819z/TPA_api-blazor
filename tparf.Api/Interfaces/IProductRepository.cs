@@ -1,7 +1,7 @@
 ﻿using tparf.Api.Entities;
 using tparf.Models.Dtos.Products;
 
-namespace tparf.Api.Repositories.Contracts
+namespace tparf.Api.Interfaces
 {
     public interface IProductRepository
     {
@@ -15,7 +15,7 @@ namespace tparf.Api.Repositories.Contracts
         Task<IEnumerable<Product>> GetItemsByCategory(long id);
         public Task<IEnumerable<Product>> GetItemsByManufacturer(long id);
 
-        
+
         public Task<Product> AddNewProduct(CreateProductDto productDto);
         public Task<Product> UpdateProduct(long id, UpdateProductDto productDto);
         public Task<Product> DeleteProduct(long id);

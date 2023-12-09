@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Text;
+using tparf.Api.Interfaces;
 using tparf.Models.Dtos.Auth;
 
 namespace tparf.Api.Services

@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Data;
+using tparf.Api.Interfaces;
 using tparf.Api.Entities;
 using tparf.Api.Extensions;
 using tparf.Api.Repositories;
-using tparf.Api.Repositories.Contracts;
 using tparf.Models.Dtos;
 using tparf.Models.Dtos.Products;
 

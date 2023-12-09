@@ -1,4 +1,4 @@
-﻿namespace tparf.Api.Services
+﻿namespace tparf.Api.Interfaces
 {
     public interface IMailService
     {

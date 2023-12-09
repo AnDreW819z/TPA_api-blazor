@@ -8,7 +8,7 @@ using System.Text;
 using tparf.Api.Data;
 using tparf.Api.Entities;
 using tparf.Api.Extensions;
-using tparf.Api.Services;
+using tparf.Api.Interfaces;
 using tparf.Models.Dtos.Auth;
 
 namespace tparf.Api.Controllers
