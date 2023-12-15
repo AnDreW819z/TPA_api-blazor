@@ -303,6 +303,32 @@ namespace tparf.Api.Migrations
                     b.ToTable("Categories");
                 });
 
+            modelBuilder.Entity("tparf.Api.Entities.Characteristic", b =>
+                {
+                    b.Property<long>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("bigint");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<long>("Id"));
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<long>("ProductId")
+                        .HasColumnType("bigint");
+
+                    b.Property<string>("Value")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ProductId");
+
+                    b.ToTable("Characteristics");
+                });
+
             modelBuilder.Entity("tparf.Api.Entities.Manufacturer", b =>
                 {
                     b.Property<long>("Id")
@@ -579,6 +605,17 @@ namespace tparf.Api.Migrations
                         .IsRequired();
 
                     b.Navigation("Manufacturer");
+                });
+
+            modelBuilder.Entity("tparf.Api.Entities.Characteristic", b =>
+                {
+                    b.HasOne("tparf.Api.Entities.TpaProduct", "Product")
+                        .WithMany()
+                        .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Product");
                 });
 
             modelBuilder.Entity("tparf.Api.Entities.Order", b =>

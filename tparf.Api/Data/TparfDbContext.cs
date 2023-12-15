@@ -28,5 +28,6 @@ namespace tparf.Api.Data
         public DbSet<TpaProduct> TpaProducts { get; set; }
         public DbSet<Order> Orders { get; set; }
         public DbSet<TokenInfo> TokenInfo { get; set; }
+        public DbSet<Characteristic> Characteristics { get; set; }
     }   
 }

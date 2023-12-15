@@ -68,12 +68,12 @@ namespace tparf.Api.Controllers
         }
 
         [HttpGet]
-        [Route("getProducts/{subId:long}")]
-        public async Task<ActionResult<IEnumerable<TpaProductDto>>> GetProductFromCategory(long subid)
+        [Route("{subId:long}/getProducts")]
+        public async Task<ActionResult<IEnumerable<TpaProductDto>>> GetProductFromSubcategory(long subId)
         {
             try
             {
-                var products = await _subcategoryRepository.GetProductFromSubcategory(subid);
+                var products = await _subcategoryRepository.GetProductFromSubcategory(subId);
                 var productsDto = products.ConvertToDto();
                 return Ok(productsDto);
             }

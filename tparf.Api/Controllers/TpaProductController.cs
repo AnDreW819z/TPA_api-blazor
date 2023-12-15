@@ -4,6 +4,7 @@ using tparf.Api.Interfaces;
 using tparf.Api.Repositories;
 using tparf.Models.Dtos.Auth;
 using tparf.Models.Dtos.TpaProducts;
+using tparf.Models.Dtos.TpaProducts.Characteristic;
 
 namespace tparf.Api.Controllers
 {
@@ -69,6 +70,7 @@ namespace tparf.Api.Controllers
         }
 
         [HttpPost]
+        [Route("addNewProduct")]
         public async Task<IActionResult> AddNewProduct([FromBody] CreateTpaProductDto productDto)
         {
             try
@@ -88,6 +90,7 @@ namespace tparf.Api.Controllers
             }
         }
         [HttpPut]
+        [Route("updateProduct/{id:long}")]
         public async Task<IActionResult> UpdateProduct(long id, UpdateTpaProductDto productDto)
         {
             try
@@ -108,6 +111,7 @@ namespace tparf.Api.Controllers
             }
         }
         [HttpDelete]
+        [Route("deleteProduct/{id:long}")]
         public async Task<ActionResult<Status>> DeleteProduct(long id)
         {
             try
@@ -121,5 +125,77 @@ namespace tparf.Api.Controllers
                 return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
             }
         }
+
+        [HttpGet]
+        [Route("{prodId:long}/getCharacteristics")]
+        public async Task<ActionResult<IEnumerable<CharacteristicDto>>> GetCharacteristicsFromProduct(long prodId)
+        {
+            try
+            {
+                var characteristics = await _tpaProductRepository.GetCharacteristicsFromProduct(prodId);
+                var characteristicsDto = characteristics.ConvertToDto();
+                return Ok(characteristicsDto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ошибка получения данных из базы данных");
+            }
+        }
+
+        [HttpPost]
+        [Route("characteristics/addNewCharacteristic")]
+        public async Task<IActionResult> AddNewCharacteristic([FromBody]CharacteristicDto characteristic)
+        {
+            try
+            {
+                var newCharacteristic = await _tpaProductRepository.AddNewCharacteristic(characteristic);
+                if(newCharacteristic == null)
+                {
+                    return NoContent();
+                }
+                return Ok(newCharacteristic);
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Ошибка создания");
+            }
+        }
+
+        [HttpPut]
+        [Route("characteristics/updateCharacteristics/{charId:long}")]
+        public async Task<IActionResult> UpdateCharacteristic(long charId, UpdateCharacteristicDto updateCharacteristicDto)
+        {
+            try
+            {
+                var updateCharacteristic = await _tpaProductRepository.UpdateCharacteristic(charId, updateCharacteristicDto);
+                if (updateCharacteristic == null)
+                {
+                    return NoContent();
+                }
+                var response = await _tpaProductRepository.GetCharacteristic(charId);
+                return Ok(response.ConvertToDto());
+            }
+            catch(Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        [Route("characteristics/deleteCharacteristics/{id:long}")]
+        public async Task<ActionResult<Status>> DeleteCharacteristic(long id)
+        {
+            try
+            {
+                var characteristic = await _tpaProductRepository.DeleteCharacteristic(id);
+                return Ok( characteristic);
+            }
+            catch(Exception ex)
+            {
+                return new Status { Message = ex.Message, StatusCode = 500 };
+            }
+        }
+
     }
 }

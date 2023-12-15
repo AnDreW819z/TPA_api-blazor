@@ -10,5 +10,6 @@ namespace tparf.Api.Interfaces
         Task<CartItem> DeleteItem(long id);
         Task<CartItem> GetItem(long id);
         Task<IEnumerable<CartItem>> GetItems(long userId);
+
     }
 }

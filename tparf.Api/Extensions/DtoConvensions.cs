@@ -7,6 +7,7 @@ using tparf.Models.Dtos.Manufacturers;
 using tparf.Models.Dtos.Products;
 using tparf.Models.Dtos.Subcategories;
 using tparf.Models.Dtos.TpaProducts;
+using tparf.Models.Dtos.TpaProducts.Characteristic;
 
 namespace tparf.Api.Extensions
 {
@@ -27,6 +28,18 @@ namespace tparf.Api.Extensions
                         }).ToList();
             }
             return null;
+        }
+
+        public static IEnumerable<CharacteristicDto> ConvertToDto(this IEnumerable<Characteristic> characteristics)
+        {
+            return (from characteristic in characteristics
+                    select new CharacteristicDto
+                    {
+                        Id = characteristic.Id,
+                        Name = characteristic.Name,
+                        Value = characteristic.Value,
+                        ProductId = characteristic.ProductId
+                    });
         }
 
         public static IEnumerable<SubcategoryDto> ConvertToDto(this IEnumerable<Subcategory> subcategories)
@@ -84,6 +97,7 @@ namespace tparf.Api.Extensions
             };
         }
 
+
         public static CategoryDto ConverToDto(this Category category)
         {
             return new CategoryDto
@@ -93,6 +107,17 @@ namespace tparf.Api.Extensions
                 IconCSS = category.IconCSS,
                 ManufacturerName = category.Manufacturer.Name,
                 ManufacturerId= category.Manufacturer.Id
+            };
+        }
+
+        public static CharacteristicDto ConvertToDto(this Characteristic characteristic)
+        {
+            return new CharacteristicDto
+            {
+                Id = characteristic.Id,
+                Name = characteristic.Name,
+                Value = characteristic.Value,
+                ProductId = characteristic.ProductId,
             };
         }
 
@@ -182,7 +207,7 @@ namespace tparf.Api.Extensions
         }
 
         public static IEnumerable<CartItemDto> ConvertToDto(this IEnumerable<CartItem> cartItems,
-                                                           IEnumerable<Product> products)
+                                                           IEnumerable<TpaProduct> products)
         {
             return (from cartItem in cartItems
                     join product in products
@@ -202,7 +227,7 @@ namespace tparf.Api.Extensions
         }
 
         public static CartItemDto ConvertToDto(this CartItem cartItem,
-                                                    Product product)
+                                                    TpaProduct product)
         {
             return new CartItemDto
             {

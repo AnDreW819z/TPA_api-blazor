@@ -13,10 +13,10 @@ namespace tparf.Api.Controllers
     public class ShoppingCartController : ControllerBase
     {
         private readonly IShoppingCartRepository _shoppingCartRepository;
-        private readonly IProductRepository _productRepository;
+        private readonly ITpaProductRepository _productRepository;
 
         public ShoppingCartController(IShoppingCartRepository shoppingCartRepository,
-                                      IProductRepository productRepository)
+                                      ITpaProductRepository productRepository)
         {
             _shoppingCartRepository = shoppingCartRepository;
             _productRepository = productRepository;
@@ -35,7 +35,7 @@ namespace tparf.Api.Controllers
                     return NoContent();
                 }
 
-                var products = await _productRepository.GetItems();
+                var products = await _productRepository.GetProducts();
 
                 if (products == null)
                 {
@@ -65,7 +65,7 @@ namespace tparf.Api.Controllers
                 {
                     return NotFound();
                 }
-                var product = await _productRepository.GetItem(cartItem.ProductId);
+                var product = await _productRepository.GetProduct(cartItem.ProductId);
 
                 if (product == null)
                 {
@@ -91,10 +91,10 @@ namespace tparf.Api.Controllers
 
                 if (newCartItem == null)
                 {
-                    return NoContent();
+                    return default(CartItemDto);
                 }
 
-                var product = await _productRepository.GetItem(newCartItem.ProductId);
+                var product = await _productRepository.GetProduct(newCartItem.ProductId);
 
                 if (product == null)
                 {
@@ -126,7 +126,7 @@ namespace tparf.Api.Controllers
                     return NotFound();
                 }
 
-                var product = await _productRepository.GetItem(cartItem.ProductId);
+                var product = await _productRepository.GetProduct(cartItem.ProductId);
 
                 if (product == null)
                     return NotFound();
@@ -153,7 +153,7 @@ namespace tparf.Api.Controllers
                     return NotFound();
                 }
 
-                var product = await _productRepository.GetItem(cartItem.ProductId);
+                var product = await _productRepository.GetProduct(cartItem.ProductId);
 
                 var cartItemDto = cartItem.ConvertToDto(product);
 

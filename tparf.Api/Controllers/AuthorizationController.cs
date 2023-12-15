@@ -26,10 +26,10 @@ namespace tparf.Api.Controllers
             RoleManager<IdentityRole<long>> roleManager,
             ITokenService tokenService)
         {
-            this._context = context;
+            _context = context;
             this.userManager = userManager;
             this.roleManager = roleManager;
-            this._tokenService = tokenService;
+            _tokenService = tokenService;
         }
 
         [HttpPost]
@@ -129,7 +129,7 @@ namespace tparf.Api.Controllers
                     RefreshToken = refreshToken,
                     Expiration = token.ValidTo,
                     StatusCode = 200,
-                    Message = "Logged in"
+                    Message = "Вход успешен"
                 });
 
             }
@@ -184,7 +184,7 @@ namespace tparf.Api.Controllers
             };
 
             await _context.Carts.AddAsync(cart);
-
+     
             if (!result.Succeeded)
             {
                 status.StatusCode = 0;

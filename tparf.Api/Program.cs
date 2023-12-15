@@ -23,8 +23,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Add Db
-builder.Services.AddDbContext<TparfDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("tparfConnection")), ServiceLifetime.Transient);
+builder.Services.AddDbContextPool<TparfDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("tparfConnection")));
 
 // Add Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<long>>()

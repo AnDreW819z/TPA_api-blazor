@@ -25,7 +25,7 @@ namespace tparf.Api.Repositories
         {
             if (await CartItemExists(cartItemToAddDto.CartId, cartItemToAddDto.ProductId) == false)
             {
-                var item = await (from product in _tparfDbContext.Products
+                var item = await (from product in _tparfDbContext.TpaProducts
                                   where product.Id == cartItemToAddDto.ProductId
                                   select new CartItem
                                   {
@@ -42,7 +42,7 @@ namespace tparf.Api.Repositories
                 }
             }
 
-            return null;
+            return default;
 
         }
 
