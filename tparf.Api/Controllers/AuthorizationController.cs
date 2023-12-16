@@ -1,13 +1,12 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.EntityFrameworkCore;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
-using System.Text;
 using tparf.Api.Data;
+using tparf.Api.EmailSender;
 using tparf.Api.Entities;
-using tparf.Api.Extensions;
 using tparf.Api.Interfaces;
 using tparf.Models.Dtos.Auth;
 
@@ -21,15 +20,18 @@ namespace tparf.Api.Controllers
         private readonly UserManager<ApplicationUser> userManager;
         private readonly RoleManager<IdentityRole<long>> roleManager;
         private readonly ITokenService _tokenService;
-        public AuthorizationController(TparfDbContext context,
+        private readonly IEmailService _emailService;
+		public AuthorizationController(TparfDbContext context,
             UserManager<ApplicationUser> userManager,
             RoleManager<IdentityRole<long>> roleManager,
-            ITokenService tokenService)
+            ITokenService tokenService,
+			IEmailService emailService)
         {
             _context = context;
             this.userManager = userManager;
             this.roleManager = roleManager;
             _tokenService = tokenService;
+            _emailService = emailService;
         }
 
         [HttpPost]
@@ -201,13 +203,36 @@ namespace tparf.Api.Controllers
             {
                 await userManager.AddToRoleAsync(user, UserRoles.User);
             }
+            // Добавляю токен для подтверждения электронной почты
 
-            status.StatusCode = 200;
+            var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
+            var confirmationLink = Url.Action(nameof(ConfirmEmail), "Authorization", new {token, email = user.Email}, Request.Scheme);
+            var message = new Message(new string[] { user.Email}, $"Подтвердите адрес электронной почты на tparf.ru", $"{user.FirstName}, Вы были зарегестрированы на портале ТОРГОВО-ПРОМЫШЛЕННОЕ АГЕНТСТВО, для дальнейшего сотрудничества пожалуйста подтвердите адресс электронной почты: {confirmationLink}");
+            await _emailService.SendEmail(message);
+
+			status.StatusCode = 200;
             status.Message = "Вы успешно зарегестрированы";
 
             return Ok(status);
 
         }
+
+        [HttpGet("ConfirmEmail")]
+        public async Task<IActionResult> ConfirmEmail(string token, string email)
+        {
+            var user = await userManager.FindByEmailAsync(email);
+            if(user != null)
+            {
+                var result = await userManager.ConfirmEmailAsync(user, token);
+                if (result.Succeeded)
+                {
+                    return StatusCode(StatusCodes.Status200OK,
+                        new Status { StatusCode = 200, Message = "Электронная почта успешно подтверждена" });
+                }
+            }
+			return StatusCode(StatusCodes.Status500InternalServerError,
+						new Status { StatusCode = 500, Message = "Пользователя с такой электронной почтой не существует" });
+		}
         
     }
 }

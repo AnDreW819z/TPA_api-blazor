@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using tparf.Api.EmailSender;
 using tparf.Api.Interfaces;
 using tparf.Models.Dtos.Auth;
 
@@ -9,10 +10,12 @@ namespace tparf.Api.Controllers
     public class AuthController : ControllerBase
     {
         private readonly IAdminService _adminService;
+        private readonly IEmailService _emailService;
 
-        public AuthController(IAdminService adminService)
+        public AuthController(IAdminService adminService, IEmailService emailService)
         {
             _adminService = adminService;
+            _emailService = emailService;
         }
 
         [HttpPost]
@@ -46,6 +49,14 @@ namespace tparf.Api.Controllers
                 return Ok(operationResult);
 
             return BadRequest(operationResult);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> TestSend()
+        {
+            var message = new Message(new string[] { "wer_ander@mail.ru" }, "Test", "<h1>Тестовое письмо</h1>");
+            await _emailService.SendEmail(message);
+            return StatusCode(StatusCodes.Status200OK, new Status { Message = "Сообщение успешно отправлено", StatusCode = 200 });
         }
     }
 }

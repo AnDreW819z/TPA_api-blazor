@@ -1,17 +1,15 @@
 using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
-using Microsoft.Net.Http.Headers;
 using Microsoft.OpenApi.Models;
 using System.Text;
 using tparf.Api.Interfaces;
 using tparf.Api.Data;
 using tparf.Api.Entities;
-using tparf.Api.Interfaces;
 using tparf.Api.Repositories;
 using tparf.Api.Services;
+using tparf.Api.EmailSender;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -55,7 +53,7 @@ builder.Services.Configure<IdentityOptions>(options =>
     options.Password.RequireLowercase = false;
     options.Password.RequireUppercase = false;
     options.Password.RequireNonAlphanumeric = false;
-    options.SignIn.RequireConfirmedEmail = false;
+    options.SignIn.RequireConfirmedEmail = true;
 });
 
 // Add Authentication and JwtBearer
@@ -82,6 +80,10 @@ builder.Services.AddAuthentication(options =>
     };
 });
 
+// Add Email Configs
+var emailConfig = builder.Configuration.GetSection("EmailConfiguration").Get<EmailConfiguration>();
+builder.Services.AddSingleton(emailConfig);
+
 //Add Autorization
 //builder.Services.AddAuthorization(options => options.DefaultPolicy =
 //    new AuthorizationPolicyBuilder
@@ -98,6 +100,7 @@ builder.Services.AddScoped<IAdminService, AdminService>();
 builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
 builder.Services.AddScoped<ITpaProductRepository, TpaProductRepository>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 
 
 builder.Services.AddSwaggerGen(option =>
