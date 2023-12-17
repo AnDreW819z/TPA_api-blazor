@@ -4,6 +4,7 @@ using tparf.Models.Dtos;
 using tparf.Models.Dtos.CartItems;
 using tparf.Models.Dtos.Categories;
 using tparf.Models.Dtos.Manufacturers;
+using tparf.Models.Dtos.Orders;
 using tparf.Models.Dtos.Products;
 using tparf.Models.Dtos.Subcategories;
 using tparf.Models.Dtos.TpaProducts;
@@ -28,6 +29,39 @@ namespace tparf.Api.Extensions
                         }).ToList();
             }
             return null;
+        }
+
+        public static IEnumerable<OrderItemDto> ConvertToDto(this IEnumerable<OrderItem> orderItems)
+        {
+            return (from orderItem in orderItems
+                    select new OrderItemDto
+                    {
+                        Id = orderItem.Id,
+                        OrderId = orderItem.OrderId,
+                        ProductId = orderItem.ProductId,
+                        ProductName = orderItem.ProductName,
+                        Qty = orderItem.Qty,
+                        Price = orderItem.Price,
+                        TotalPriceByOrderItem = orderItem.TotalPriceByOrderItem,
+                    });
+        }
+
+        public static IEnumerable<OrderDto> ConvertToDto(this IEnumerable<Order> orders)
+        {
+            return(from order in orders
+                   select new OrderDto
+                   {
+                       Id = order.Id,
+                       CartId = order.CartId,
+                       Email = order.Email,
+                       PhoneNumber = order.PhoneNumber,
+                       FirstName = order.FirstName,
+                       LastName = order.LastName,
+                       TotalPrice = order.TotalPrice,
+                       Adress = order.Adress,
+                       StatusId = order.StatusId,
+                   });
+
         }
 
         public static IEnumerable<CharacteristicDto> ConvertToDto(this IEnumerable<Characteristic> characteristics)
@@ -95,6 +129,23 @@ namespace tparf.Api.Extensions
                 Name = manufacturer.Name,
                 ImageUrl = manufacturer.ImageUrl,
             };
+        }
+
+        public static OrderDto ConvertToDto(this Order order)
+        {
+            return new OrderDto
+            {
+                Id = order.Id,
+                CartId = order.CartId,
+                Email = order.Email,
+                PhoneNumber = order.PhoneNumber,
+                FirstName = order.FirstName,
+                LastName = order.LastName,
+                TotalPrice = order.TotalPrice,
+                Adress = order.Adress,
+                StatusId = order.StatusId,
+            };
+
         }
 
 

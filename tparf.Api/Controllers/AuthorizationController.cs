@@ -207,7 +207,7 @@ namespace tparf.Api.Controllers
 
             var token = await userManager.GenerateEmailConfirmationTokenAsync(user);
             var confirmationLink = Url.Action(nameof(ConfirmEmail), "Authorization", new {token, email = user.Email}, Request.Scheme);
-            var message = new Message(new string[] { user.Email}, $"Подтвердите адрес электронной почты на tparf.ru", $"{user.FirstName}, Вы были зарегестрированы на портале ТОРГОВО-ПРОМЫШЛЕННОЕ АГЕНТСТВО, для дальнейшего сотрудничества пожалуйста подтвердите адресс электронной почты: {confirmationLink}");
+            var message = new Message(new string[] { user.Email}, $"Подтвердите адрес электронной почты на tparf.ru", $"{user.FirstName}, Вы были зарегистрированы на портале ТОРГОВО-ПРОМЫШЛЕННОЕ АГЕНТСТВО, для дальнейшего сотрудничества пожалуйста подтвердите адресс электронной почты: {confirmationLink}");
             await _emailService.SendEmail(message);
 
 			status.StatusCode = 200;

@@ -26,8 +26,10 @@ namespace tparf.Api.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Subcategory> Subcategories { get; set; }
         public DbSet<TpaProduct> TpaProducts { get; set; }
-        public DbSet<Order> Orders { get; set; }
         public DbSet<TokenInfo> TokenInfo { get; set; }
         public DbSet<Characteristic> Characteristics { get; set; }
+        public DbSet<Order> Orders { get; set; }
+        public DbSet<OrderItem> OrderItems { get; set; }
+        public DbSet<OrderStatus> OrderStatuses { get; set; }
     }   
 }

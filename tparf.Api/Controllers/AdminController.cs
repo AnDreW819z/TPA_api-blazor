@@ -51,12 +51,5 @@ namespace tparf.Api.Controllers
             return BadRequest(operationResult);
         }
 
-        [HttpGet]
-        public async Task<IActionResult> TestSend()
-        {
-            var message = new Message(new string[] { "wer_ander@mail.ru" }, "Test", "<h1>Тестовое письмо</h1>");
-            await _emailService.SendEmail(message);
-            return StatusCode(StatusCodes.Status200OK, new Status { Message = "Сообщение успешно отправлено", StatusCode = 200 });
-        }
     }
 }

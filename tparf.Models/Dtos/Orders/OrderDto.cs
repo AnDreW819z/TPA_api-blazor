@@ -1,13 +1,14 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
-using System.Composition.Convention;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace tparf.Api.Entities
+namespace tparf.Models.Dtos.Orders
 {
-    public class Order
+    public class OrderDto
     {
         public long Id { get; set; }
-        public Cart Cart { get; set; }
-        [ForeignKey("CartId")]
         public long CartId { get; set; }
         public string Email { get; set; }
         public string PhoneNumber { get; set; }
@@ -15,9 +16,7 @@ namespace tparf.Api.Entities
         public string LastName { get; set; }
         public decimal TotalPrice { get; set; }
         public string? Adress { get; set; }
-        [ForeignKey("StatusId")]
-        public OrderStatus Status { get; set; }
         public int StatusId { get; set; }
-        public DateTime CreateTime {get; set;}
+        public DateTime CreateTime { get; set; }
     }
 }
