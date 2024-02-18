@@ -5,6 +5,7 @@ using tparf.Api.Interfaces;
 using tparf.Models.Dtos.Auth;
 using tparf.Models.Dtos.TpaProducts;
 using tparf.Models.Dtos.TpaProducts.Characteristic;
+using tparf.Models.Dtos.TpaProducts.Images;
 
 namespace tparf.Api.Repositories
 {
@@ -26,6 +27,11 @@ namespace tparf.Api.Repositories
         private async Task<bool> CharacteristicExist(long charId)
         {
             return await _tparfDbContext.Characteristics.AnyAsync(c => c.Id == charId);
+        }
+
+        private async Task<bool> ImageExist(long imgId)
+        {
+            return await _tparfDbContext.ProductImages.AnyAsync(c => c.Id == imgId);
         }
 
         public async Task<TpaProduct> AddNewProduct(CreateTpaProductDto productDto)
@@ -161,6 +167,66 @@ namespace tparf.Api.Repositories
                 var characteristic = await _tparfDbContext.Characteristics.SingleOrDefaultAsync(c => c.Id == id);
                 characteristic.ProductId =  GetProduct(characteristic.ProductId).Result.Id;
                 return characteristic;
+            }
+            return default;
+        }
+
+        public async Task<ProductImage> AddNewImage(ImageDto imageDto)
+        {
+            if (await ImageExist(imageDto.Id) == false)
+            {
+                ProductImage image = new ProductImage
+                {
+                    Value = imageDto.Value,
+                    ProductId = imageDto.ProductId,
+                };
+                if (image != null)
+                {
+                    await _tparfDbContext.ProductImages.AddAsync(image);
+                    await _tparfDbContext.SaveChangesAsync();
+                    return image;
+                }
+            }
+            return default;
+        }
+
+        public async Task<Status> DeleteImage(long imgId)
+        {
+            ProductImage image = await _tparfDbContext.ProductImages.FindAsync(imgId);
+            if (image != null)
+            {
+                _tparfDbContext.ProductImages.Remove(image);
+                await _tparfDbContext.SaveChangesAsync();
+                return new Status { Message = "Картинка успешно удалена", StatusCode = 200 };
+            }
+            return new Status { Message = "Ошибка удаления", StatusCode = 500 };
+        }
+
+        public async Task<ProductImage> GetImage(long id)
+        {
+            if (await ImageExist(id))
+            {
+                var image = await _tparfDbContext.ProductImages.SingleOrDefaultAsync(c => c.Id == id);
+                image.ProductId = GetProduct(image.ProductId).Result.Id;
+                return image;
+            }
+            return default;
+        }
+
+        public async Task<IEnumerable<ProductImage>> GetImagesFromProduct(long productId)
+        {
+            var images = await _tparfDbContext.ProductImages.Include(c => c.Product).Where(c => c.ProductId == productId).ToListAsync();
+            return images;
+        }
+
+        public async Task<ProductImage> UpdateImage(long imgId, UpdateImageDto updateImage)
+        {
+            ProductImage image = await _tparfDbContext.ProductImages.FindAsync(imgId);
+            if (image != null)
+            {
+                image.Value = updateImage.Value;
+                await _tparfDbContext.SaveChangesAsync();
+                return image;
             }
             return default;
         }

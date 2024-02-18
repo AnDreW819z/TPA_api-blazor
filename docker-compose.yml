@@ -1,0 +1,36 @@
+version: '3.4'
+
+networks:
+  dev:
+    driver: bridge
+
+services:
+  tparf:
+    image: tparf
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 7187:80
+    depends_on:
+      - "tparfDb"
+    networks:
+      - dev
+
+  tparfDb:
+    image: postgres:latest
+    restart: always
+    volumes:
+      - db_volume:/var/lib/postgresql/data/
+    container_name: tparfDb
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=1e2rf3s6wsd6f
+      - POSTGRES_DB=tparfDb
+    ports:
+      - 5432:5432
+    networks:
+      - dev
+
+volumes:
+  db_volume:

@@ -5,6 +5,7 @@ using tparf.Api.Repositories;
 using tparf.Models.Dtos.Auth;
 using tparf.Models.Dtos.TpaProducts;
 using tparf.Models.Dtos.TpaProducts.Characteristic;
+using tparf.Models.Dtos.TpaProducts.Images;
 
 namespace tparf.Api.Controllers
 {
@@ -197,5 +198,75 @@ namespace tparf.Api.Controllers
             }
         }
 
+        [HttpGet]
+        [Route("{prodId:long}/getImages")]
+        public async Task<ActionResult<IEnumerable<ImageDto>>> GetImagesFromProduct(long prodId)
+        {
+            try
+            {
+                var images = await _tpaProductRepository.GetImagesFromProduct(prodId);
+                var imagesDto = images.ConvertToDto();
+                return Ok(imagesDto);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, "Ошибка получения данных из базы данных");
+            }
+        }
+
+        [HttpPost]
+        [Route("characteristics/addNewImage")]
+        public async Task<IActionResult> AddNewImage([FromBody] ImageDto image)
+        {
+            try
+            {
+                var newImage = await _tpaProductRepository.AddNewImage(image);
+                if (newImage == null)
+                {
+                    return NoContent();
+                }
+                return Ok(newImage);
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError,
+                    "Ошибка создания");
+            }
+        }
+
+        [HttpPut]
+        [Route("images/updateImages/{charId:long}")]
+        public async Task<IActionResult> UpdateImage(long imgId, UpdateImageDto updateImageDto)
+        {
+            try
+            {
+                var updateImage = await _tpaProductRepository.UpdateImage(imgId, updateImageDto);
+                if (updateImage == null)
+                {
+                    return NoContent();
+                }
+                var response = await _tpaProductRepository.GetImage(imgId);
+                return Ok(response.ConvertToDto());
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(StatusCodes.Status500InternalServerError, ex.Message);
+            }
+        }
+
+        [HttpDelete]
+        [Route("images/deleteImage/{id:long}")]
+        public async Task<ActionResult<Status>> DeleteImage(long id)
+        {
+            try
+            {
+                var image = await _tpaProductRepository.DeleteImage(id);
+                return Ok(image);
+            }
+            catch (Exception ex)
+            {
+                return new Status { Message = ex.Message, StatusCode = 500 };
+            }
+        }
     }
 }

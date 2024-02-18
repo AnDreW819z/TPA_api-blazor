@@ -2,6 +2,7 @@
 using tparf.Models.Dtos.Auth;
 using tparf.Models.Dtos.TpaProducts;
 using tparf.Models.Dtos.TpaProducts.Characteristic;
+using tparf.Models.Dtos.TpaProducts.Images;
 
 namespace tparf.Api.Interfaces
 {
@@ -18,5 +19,11 @@ namespace tparf.Api.Interfaces
         public Task<Characteristic> AddNewCharacteristic(CharacteristicDto characteristic);
         public Task<Characteristic> UpdateCharacteristic(long charId, UpdateCharacteristicDto updateCharacteristic);
         public Task<Status> DeleteCharacteristic(long charId);
+
+        public Task<ProductImage> GetImage(long id);
+        public Task<IEnumerable<ProductImage>> GetImagesFromProduct(long productId);
+        public Task<ProductImage> AddNewImage(ImageDto imageDto);
+        public Task<ProductImage> UpdateImage(long imgId, UpdateImageDto updateImage);
+        public Task<Status> DeleteImage(long charId);
     }
 }

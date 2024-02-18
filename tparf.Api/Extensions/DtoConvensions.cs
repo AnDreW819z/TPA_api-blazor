@@ -9,6 +9,7 @@ using tparf.Models.Dtos.Products;
 using tparf.Models.Dtos.Subcategories;
 using tparf.Models.Dtos.TpaProducts;
 using tparf.Models.Dtos.TpaProducts.Characteristic;
+using tparf.Models.Dtos.TpaProducts.Images;
 
 namespace tparf.Api.Extensions
 {
@@ -74,6 +75,16 @@ namespace tparf.Api.Extensions
                         Value = characteristic.Value,
                         ProductId = characteristic.ProductId
                     });
+        }
+
+        public static ImageDto ConvertToDto(this ProductImage image)
+        {
+            return new ImageDto
+            {
+                Id = image.Id,
+                Value = image.Value,
+                ProductId = image.ProductId,
+            };
         }
 
         public static IEnumerable<SubcategoryDto> ConvertToDto(this IEnumerable<Subcategory> subcategories)
@@ -172,6 +183,17 @@ namespace tparf.Api.Extensions
             };
         }
 
+        public static IEnumerable<ImageDto> ConvertToDto(this IEnumerable<ProductImage> images)
+        {
+            return (from image in images
+                    select new ImageDto
+                    {
+                        Id = image.Id,
+                        Value = image.Value,
+                        ProductId = image.ProductId
+                    });
+        }
+
         public static SubcategoryDto ConverToDto(this Subcategory subcategory)
         {
             return new SubcategoryDto
@@ -207,55 +229,6 @@ namespace tparf.Api.Extensions
 
         //------------------------------------------------------------------------------------------------------------------------
 
-        public static IEnumerable<ProductCategoryDto> ConvertToDto(this IEnumerable<ProductCategory> productCategories)
-        {
-            return (from productCategory in productCategories
-                    select new ProductCategoryDto
-                    {
-                        Id = productCategory.Id,
-                        Name = productCategory.Name,
-                        IconCSS = productCategory.IconCSS
-                    }).ToList();
-        }
-
-        public static IEnumerable<ProductDto> ConvertToDto(this IEnumerable<Product> products)
-        {
-            return (from product in products
-                    select new ProductDto
-                    {
-                        Id = product.Id,
-                        Name = product.Name,
-                        Description= product.Description,
-                        Article = product.Article,
-                        ImageUrl= product.ImageUrl,
-                        Price= product.Price,
-                        Qty= product.Qty,
-                        CategoryId= product.ProductCategory.Id,
-                        CategoryName= product.ProductCategory.Name,
-                        ManufacturerId = product.ProductManufacturer.Id,
-                        ManufacturerName = product.ProductManufacturer.Name
-
-                    }).ToList();
-        }
-
-        public static ProductDto ConvertToDto(this Product product)
-        {
-            return new ProductDto
-            {
-                Id = product.Id,
-                Name = product.Name,
-                Description = product.Description,
-                Article = product.Article,
-                ImageUrl = product.ImageUrl,
-                Price = product.Price,
-                Qty = product.Qty,
-                CategoryId = product.ProductCategory.Id,
-                CategoryName = product.ProductCategory.Name,
-                ManufacturerId = product.ProductManufacturer.Id,
-                ManufacturerName = product.ProductManufacturer.Name
-
-            };
-        }
 
         public static IEnumerable<CartItemDto> ConvertToDto(this IEnumerable<CartItem> cartItems,
                                                            IEnumerable<TpaProduct> products)

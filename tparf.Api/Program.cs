@@ -22,7 +22,7 @@ builder.Services.AddSwaggerGen();
 
 // Add Db
 builder.Services.AddDbContextPool<TparfDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("tparfConnection")));
+options.UseNpgsql(builder.Configuration.GetConnectionString("tparfConnection")));
 
 // Add Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole<long>>()
@@ -97,7 +97,6 @@ builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddScoped<ISubcategoryRepository, SubcategoruRepository>();
 builder.Services.AddTransient<ITokenService, TokenService>();
 builder.Services.AddScoped<IAdminService, AdminService>();
-builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<IShoppingCartRepository, ShoppingCartRepository>();
 builder.Services.AddScoped<ITpaProductRepository, TpaProductRepository>();
 builder.Services.AddScoped<IEmailService, EmailService>();
